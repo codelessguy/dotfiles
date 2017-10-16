@@ -22,9 +22,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 
 " Theme
-"Plug 'morhetz/gruvbox'
-"Plug 'NLKNguyen/papercolor-theme'
-"Plug 'junegunn/seoul256.vim'
+Plug 'morhetz/gruvbox'
+Plug 'NLKNguyen/papercolor-theme'
+" Plug 'junegunn/seoul256.vim'
 Plug 'dracula/vim'
 "Plug 'vim-scripts/pyte'
 
@@ -36,7 +36,7 @@ call plug#end()
 "
 " RELOAD VIM !!!
 " :so $MYVIMRC
-"
+
 
 let mapleader = ','
 
@@ -80,9 +80,9 @@ set noswapfile
 """""""""
 syntax on
 set t_Co=256
-" set background=dark
+" set background=light
 " colorscheme PaperColor
- colorscheme dracula
+colorscheme dracula
 " colorscheme gruvbox
 " colorscheme pyte
 
