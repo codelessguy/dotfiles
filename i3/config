@@ -1,0 +1,236 @@
+# inspired from: https://github.com/LukeSmithxyz/voidrice/blob/master/.config/i3/config
+
+###---Basic Definitions---###
+#Needed for i3-gaps
+#hide_edge_borders both
+#for_window [class="^.*"] border pixel 0
+gaps inner 10
+gaps outer 0
+#smart_gaps on 
+font xos4 Terminus:monospace 8
+set $mod Mod4
+set $term urxvt
+
+###---Starting External Scripts---###
+exec_always --no-startup-id feh --bg-scale /home/xyz/.wallpaper.jpg
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+###---Audio and Music Definitions---###
+#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% #increase sound volume
+#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5% #decrease sound volume
+#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
+#bindsym XF86AudioMute exec "amixer set Master toggle"
+bindsym XF86AudioMute exec --no-startup-id pamixer --allow-boost -t
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -M set Master 5%- unmute
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -M set Master 5%+ unmute
+bindsym XF86AudioPlay exec $pause
+
+###---Basic Bindings---###
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym $mod+Return 		exec $term
+# bindsym $mod+Return exec i3-sensible-terminal
+
+bindsym $mod+Shift+space 	floating toggle
+bindsym $mod+space		focus mode_toggle
+
+bindsym $mod+Escape		workspace prev
+
+#bindsym $mod+Shift+BackSpace exec sudo reboot
+#bindsym $mod+Shift+Escape    exec sudo poweroff
+#bindsym $mod+Shift+P    exec sudo pm-suspend
+
+###---Letter Key Bindings---###
+bindsym $mod+q			kill
+#bindsym $mod+Shift+q		kill
+
+bindsym $mod+w			exec --no-startup-id $BROWSER
+#bindsym $mod+Shift+w		exec --no-startup-id $BROWSER
+
+bindsym $mod+e			exec $term -e ranger
+#bindsym $mod+Shift+e
+
+#bindsym $mod+r 			exec $term -e ranger
+#bindsym $mod+Shift+r		restart
+
+bindsym $mod+t			split toggle
+bindsym $mod+Shift+t		gaps inner current set 10; gaps outer current set 0
+
+#bindsym $mod+y			exec $term -e calcurse
+bindsym $mod+Shift+y		resize shrink width 10 px or 10ppt
+
+bindsym $mod+u			[instance="dropdown"] scratchpad show; move position center
+bindsym $mod+Shift+u		resize shrink height 10 px or 10 ppt
+
+bindsym $mod+i 			exec $term -e htop
+bindsym $mod+Shift+i		resize grow height 10 px or 10 ppt
+
+#bindsym $mod+o			exec --no-startup-id $beg
+bindsym $mod+Shift+o		resize grow width 10 px or 10 ppt
+
+#bindsym $mod+p			exec $pause
+#bindsym $mod+Shift+p		exec mypaint
+
+bindsym $mod+a			[instance="math"] scratchpad show; move position center
+bindsym $mod+Shift+a		exec pavucontrol
+#bindsym $mod+Shift+a		exec $term -e ncpamixer
+
+bindsym $mod+s			gaps inner current plus 5
+bindsym $mod+Shift+s		gaps inner current minus 5
+
+bindsym $mod+d			exec rofi -show drun
+bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
+
+bindsym $mod+f			fullscreen toggle
+#bindsym $mod+Shift+f
+
+bindsym $mod+g			workspace prev
+bindsym $mod+Shift+g		exec --no-startup-id gimp; workspace $ws5
+
+bindsym $mod+h			focus left
+bindsym $mod+Shift+h		move left 30
+
+bindsym $mod+j			focus down
+bindsym $mod+Shift+j		move down 30
+
+bindsym $mod+k			focus up
+bindsym $mod+Shift+k		move up 30
+
+bindsym $mod+l			focus right
+bindsym $mod+Shift+l		move right 30
+
+bindsym $mod+z			gaps outer current plus 5
+bindsym $mod+Shift+z		gaps outer current minus 5
+
+bindsym $mod+x			exec --no-startup-id ~/.config/i3/lock.sh
+#bindsym $mod+Shift+x		exec sudo shutdown -h now
+
+#bindsym $mod+c			exec $term -e weechat
+#bindsym $mod+Shift+c
+
+#bindsym $mod+v			exec urxvt -e vis
+#bindsym $mod+Shift+v		exec projectM-pulseaudio
+
+#bindsym $mod+b			exec $prev
+#bindsym $mod+Shift+b		exec --no-startup-id blender; workspace $ws6
+
+#bindsym $mod+n			exec $term -e newsbeuter
+#bindsym $mod+Shift+n		exec $term -e newsbeuter
+
+#bindsym $mod+m 			exec $music
+#bindsym $mod+Shift+m exec $mute
+
+# split in horizontal orientation
+#bindsym $mod+h split h
+
+# split in vertical orientation
+#bindsym $mod+v split v
+
+# change container layout (stacked, tabbed, toggle split)
+#bindsym $mod+s layout stacking
+#bindsym $mod+z layout tabbed
+#bindsym $mod+e layout toggle split
+
+# focus the parent container
+#bindsym $mod+q focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+###---Workspace Bindings---###
+# switch to workspace
+bindsym $mod+ampersand workspace 1
+bindsym $mod+eacute workspace 2
+bindsym $mod+quotedbl workspace 3
+bindsym $mod+apostrophe workspace 4
+bindsym $mod+parenleft workspace 5
+bindsym $mod+minus workspace 6
+bindsym $mod+egrave workspace 7
+bindsym $mod+underscore workspace 8
+bindsym $mod+ccedilla workspace 9
+bindsym $mod+agrave workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+eacute move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+egrave move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+ccedilla move container to workspace 9
+bindsym $mod+Shift+agrave move container to workspace 10
+
+###---Function Buttons---###
+#bindsym F1		nop
+#bindsym F2
+#bindsym F3
+#bindsym F4
+#bindsym F5
+#bindsym F6
+#bindsym F7
+#bindsym F8
+#bindsym F9
+#bindsym F10
+bindsym F11		fullscreen toggle
+#bindsym F12
+
+###---Arrow Keys---###
+bindsym $mod+Left		focus left
+bindsym $mod+Down		focus down
+bindsym $mod+Up			focus up
+bindsym $mod+Right 		focus right
+bindsym $mod+Shift+Left		move left
+bindsym $mod+Shift+Down		move down
+bindsym $mod+Shift+Up		move up
+bindsym $mod+Shift+Right move right
+
+###---Media Keys---###
+
+#Print screen takes a screenshot.
+#With shift, it takes one only of the given window.
+bindsym Print 			exec --no-startup-id scrot
+bindsym Shift+Print exec --no-startup-id scrot -u
+
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym m resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+# bar {
+#         status_command i3status
+# }
+
+# Remove title bar
+new_window pixel 2
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #CAA9FA #BD93F9 #ffffff #2e9ef4   #BD93F9
