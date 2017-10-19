@@ -12,8 +12,9 @@ set $mod Mod4
 set $term urxvt
 
 ###---Starting External Scripts---###
-exec_always --no-startup-id feh --bg-scale /home/xyz/.wallpaper.jpg
+exec_always --no-startup-id feh --bg-tile /home/xyz/.wallpaper.png
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec --no-startup-id firefox
 
 ###---Audio and Music Definitions---###
 #bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% #increase sound volume
@@ -41,9 +42,7 @@ bindsym $mod+space		focus mode_toggle
 
 bindsym $mod+Escape		workspace prev
 
-#bindsym $mod+Shift+BackSpace exec sudo reboot
-#bindsym $mod+Shift+Escape    exec sudo poweroff
-#bindsym $mod+Shift+P    exec sudo pm-suspend
+bindsym $mod+Shift+BackSpace exec ~/.config/rofi-power.sh
 
 ###---Letter Key Bindings---###
 bindsym $mod+q			kill
@@ -76,7 +75,7 @@ bindsym $mod+Shift+o		resize grow width 10 px or 10 ppt
 #bindsym $mod+p			exec $pause
 #bindsym $mod+Shift+p		exec mypaint
 
-bindsym $mod+a			[instance="math"] scratchpad show; move position center
+bindsym $mod+a			focus parent
 bindsym $mod+Shift+a		exec pavucontrol
 #bindsym $mod+Shift+a		exec $term -e ncpamixer
 
@@ -113,10 +112,10 @@ bindsym $mod+x			exec --no-startup-id ~/.config/i3/lock.sh
 #bindsym $mod+c			exec $term -e weechat
 #bindsym $mod+Shift+c
 
-#bindsym $mod+v			exec urxvt -e vis
+bindsym $mod+v			split v
 #bindsym $mod+Shift+v		exec projectM-pulseaudio
 
-#bindsym $mod+b			exec $prev
+bindsym $mod+b			split h
 #bindsym $mod+Shift+b		exec --no-startup-id blender; workspace $ws6
 
 #bindsym $mod+n			exec $term -e newsbeuter
@@ -124,12 +123,6 @@ bindsym $mod+x			exec --no-startup-id ~/.config/i3/lock.sh
 
 #bindsym $mod+m 			exec $music
 #bindsym $mod+Shift+m exec $mute
-
-# split in horizontal orientation
-#bindsym $mod+h split h
-
-# split in vertical orientation
-#bindsym $mod+v split v
 
 # change container layout (stacked, tabbed, toggle split)
 #bindsym $mod+s layout stacking

@@ -1,6 +1,7 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-easy-align'
+Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
 
 " Fix copy and paste
 Plug 'svermeulen/vim-easyclip'
@@ -24,12 +25,24 @@ Plug 'easymotion/vim-easymotion'
 " Theme
 Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
-" Plug 'junegunn/seoul256.vim'
+Plug 'junegunn/seoul256.vim'
 Plug 'dracula/vim'
 "Plug 'vim-scripts/pyte'
 
 " Show color
 Plug 'lilydjwg/colorizer'
+
+" Programme language support
+Plug 'sheerun/vim-polyglot'
+
+" Close bracket automatically
+Plug 'Raimondi/delimitMate'
+
+" Auto comment code
+Plug 'scrooloose/nerdcommenter'
+
+" Git
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
@@ -70,21 +83,31 @@ if !&sidescrolloff
     set sidescrolloff=5   " Show next 5 columns while side-scrolling.
 endif
 set nostartofline       " Do not jump to first character with page commands.
+set encoding=utf-8
+set hidden " change buffer without saving
 
 " Copy buffer into x clipboard 
 set clipboard=unnamedplus
 set noswapfile
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Python
+" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 """""""""
 " Theme "
 """""""""
 syntax on
 set t_Co=256
-" set background=light
-" colorscheme PaperColor
-colorscheme dracula
+"set background=light
+colorscheme PaperColor
+" colorscheme dracula
 " colorscheme gruvbox
 " colorscheme pyte
+" colo seoul256-light
 
 """""""""""""""
 " Move around "
@@ -92,13 +115,19 @@ colorscheme dracula
 noremap <C-k> 5k
 noremap <C-j> 5j
 
-" Move between panes with , + arrow keys
+" Move between panes with "," + arrow keys
 nmap <silent> <Leader><Up> :wincmd k<CR>
 nmap <silent> <Leader><Down> :wincmd j<CR>
 nmap <silent> <Leader><Left> :wincmd h<CR>
 nmap <silent> <Leader><Right> :wincmd l<CR>
 " Or use C-W h,j,k,l
 
+"""""""""""
+" Buffers "
+"""""""""""
+noremap <Tab> :bnext<CR>
+noremap <S-Tab> :bprevious<CR>
+noremap <Leader>b :bdelete<CR>
 
 """""""""""""
 " NERDTree
@@ -144,3 +173,24 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+
+"""""""""""""""
+" Easy Motion "
+"""""""""""""""
+map <SPACE> <Plug>(easymotion-s)
+
+""""""""""""""""""
+" NERD Commenter "
+""""""""""""""""""
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+"""""""""""""""""
+" YouCompleteMe "
+"""""""""""""""""
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>h :YcmCompleter GoToDefinitionElseDeclaration<CR>

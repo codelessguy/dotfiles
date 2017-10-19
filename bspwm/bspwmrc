@@ -26,3 +26,4 @@ bspc config presel_border_color         "#604B6C"
 
 #compton --config ~/.config/compton.conf &
 ~/.config/polybar/launch.sh
+firefox &
