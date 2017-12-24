@@ -35,11 +35,13 @@ pacaur
 pamixer
 patch
 pcmciautils
+pgadmin3
 pkg-config
 pm-utils
 polybar
 postgresql
 powerline-fonts-git
+pycharm-community
 python-jedi
 qutebrowser
 ranger
@@ -53,10 +55,10 @@ tig
 tree
 ttf-lato
 ttf-monaco
-udisks2
 usbutils
 vi
 virtualbox
+visual-studio-code
 wget
 which
 xorg-xinit

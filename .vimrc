@@ -3,6 +3,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-easy-align'
 Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
 
+" Typescript
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'Quramy/tsuquyomi'
+
 " Fix copy and paste
 Plug 'svermeulen/vim-easyclip'
 " easyclip dep
@@ -128,6 +132,7 @@ nmap <silent> <Leader><Right> :wincmd l<CR>
 noremap <Tab> :bnext<CR>
 noremap <S-Tab> :bprevious<CR>
 noremap <Leader>b :bdelete<CR>
+" bufdo bd   " close all buffers
 
 """""""""""""
 " NERDTree
@@ -194,3 +199,28 @@ let g:NERDTrimTrailingWhitespace = 1
 """""""""""""""""
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>h :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+
+""""""""""""
+" Marko js "
+""""""""""""
+autocmd BufNewFile,BufRead *.marko   set syntax=html
+
+"""""""""""""""""""""""""
+" fugitive git bindings "
+"""""""""""""""""""""""""
+nnoremap <space>ga :Git add %:p<CR><CR>
+nnoremap <space>gs :Gstatus<CR>
+nnoremap <space>gc :Gcommit -v -q<CR>
+nnoremap <space>gt :Gcommit -v -q %:p<CR>
+nnoremap <space>gd :Gdiff<CR>
+nnoremap <space>ge :Gedit<CR>
+nnoremap <space>gr :Gread<CR>
+nnoremap <space>gw :Gwrite<CR><CR>
+nnoremap <space>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <space>gp :Ggrep<Space>
+nnoremap <space>gm :Gmove<Space>
+nnoremap <space>gb :Git branch<Space>
+nnoremap <space>go :Git checkout<Space>
+nnoremap <space>gps :Dispatch! git push<CR>
+nnoremap <space>gpl :Dispatch! git pull<CR>
