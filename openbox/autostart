@@ -19,8 +19,9 @@
 xset r rate 190 35
 
 feh --bg-tile /home/xyz/data/doc/images/wallpaper/flower_black.png &
-xfce4-panel &
+~/.config/polybar/launch.sh
 terminator &
 firefox &
-chromium &
 udiskie &
+#code &
+#thunderbird &
