@@ -4,14 +4,17 @@
 
 # terminal emulator
 super + Return
-	urxvt
+	terminator
 
 # program launcher
 super + d
-	rofi -show drun
+	rofi -show drun -show-icons
+
+super + Escape
+	/home/xyz/.config/sxhkd/shutdown_menu
 
 # make sxhkd reload its configuration files:
-super + Escape
+super + ctrl + Escape
 	pkill -USR1 -x sxhkd
 
 #
