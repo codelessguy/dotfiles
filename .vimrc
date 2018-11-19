@@ -1,11 +1,11 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-easy-align'
-Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
+" Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
 
 " Typescript
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'Quramy/tsuquyomi'
+" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug 'Quramy/tsuquyomi'
 
 " Fix copy and paste
 Plug 'svermeulen/vim-easyclip'
@@ -13,14 +13,14 @@ Plug 'svermeulen/vim-easyclip'
 Plug 'tpope/vim-repeat'
 
 " Files
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree' , { 'on': 'NERDTreeToggle' }
 
 " Bar
 Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes' " Dracula already have the theme
 
 " File search
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
 
 " Move
@@ -197,8 +197,8 @@ let g:NERDTrimTrailingWhitespace = 1
 """""""""""""""""
 " YouCompleteMe "
 """""""""""""""""
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>h :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"let g:ycm_autoclose_preview_window_after_completion=1
+"map <leader>h :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
 """"""""""""
