@@ -16,8 +16,7 @@
 #
 #xfce-mcs-manager &
 
-xset r rate 190 35
-
 feh --bg-tile /home/xyz/data/doc/images/wallpaper/flower_black.png &
-# ~/.config/polybar/launch.sh
+nm-applet &
+/home/xyz/.config/polybar/launch.sh
 

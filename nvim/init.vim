@@ -4,13 +4,18 @@ call plug#begin('~/.local/share/nvim/plugged')
 " pip3 install neovim
 " npm install -g neovim typescript
 
-" Typescript
-Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript.tsx' }
-Plug 'mhartington/nvim-typescript', {'do': './install.sh', 'for': 'typescript.tsx' }
 " For async completion
 Plug 'Shougo/deoplete.nvim'
 " For Denite features
 Plug 'Shougo/denite.nvim'
+
+" Go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
+Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
+
+" Typescript
+Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript.tsx' }
+Plug 'mhartington/nvim-typescript', {'do': './install.sh', 'for': 'typescript.tsx' }
 
 Plug 'neomake/neomake'
 
@@ -250,3 +255,13 @@ let g:neomake_error_sign = {
   \ }
 "}}}
 
+" GO {{{
+let g:go_fmt_fail_silently = 1
+let g:go_fmt_command = "goimports"
+let g:go_fmt_fail_silently = 1
+let g:go_addtags_transform = "camelcase"
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+" }}}

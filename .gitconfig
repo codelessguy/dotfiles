@@ -1,0 +1,12 @@
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+[user]
+    name = rikroled
+    email = rikroled@gmail.com
+[alias]
+    ci = commit
+    co = checkout
+    st = status
+    br = branch

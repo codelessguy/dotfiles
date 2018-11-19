@@ -14,6 +14,15 @@ if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
   exec startx
 fi
 
+alias upt=yay -Suy && yay -Scc
+export EDITOR="nvim"
+alias vi=nvim
+alias sudovi="sudo -E nvim"
+
+export TERM=xterm-256color
+
+export PATH="$HOME/.bin:$PATH"
+
 # Source fzf
 source "/usr/share/fzf/completion.zsh"
 source "/usr/share/fzf/key-bindings.zsh"
@@ -27,8 +36,7 @@ export PATH="$GOPATH/bin:$PATH"
 
 # Npm
 export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH=~/.npm-global/bin:$PATH
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -36,21 +44,21 @@ export NVM_DIR="$HOME/.nvm"
 # place this after nvm initialization!
 autoload -U add-zsh-hook
 load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
+ local node_version="$(nvm version)"
+ local nvmrc_path="$(nvm_find_nvmrc)"
 
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+ if [ -n "$nvmrc_path" ]; then
+   local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
+   if [ "$nvmrc_node_version" = "N/A" ]; then
+     nvm install
+   elif [ "$nvmrc_node_version" != "$node_version" ]; then
+     nvm use
+   fi
+ elif [ "$node_version" != "$(nvm version default)" ]; then
+   echo "Reverting to nvm default version"
+   nvm use default
+ fi
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
