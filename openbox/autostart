@@ -18,5 +18,4 @@
 
 feh --bg-tile /home/xyz/data/doc/images/wallpaper/flower_black.png &
 nm-applet &
-/home/xyz/.config/polybar/launch.sh
-
+tint2 &

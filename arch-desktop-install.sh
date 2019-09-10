@@ -4,27 +4,27 @@ set -e
 
 # Config flags
 NVIDIA=true
-DESKTOP="i3" # Others: "openbox"
+DESKTOP="openbox" # Others: "i3"
 
-# Configure network
-# sudo tee /etc/netctl/eth-auto <<-EOF
-# Interface=enp3s0
-# Connection=ethernet
-# IP=dhcp
-# EOF
-# netctl start eth-auto
-# netctl enable eth-auto
+# Configure network (DISABLED at startup use network manager)
+sudo tee /etc/netctl/eth-auto <<-EOF
+Interface=enp3s0
+Connection=ethernet
+IP=dhcp
+EOF
+sudo netctl start eth-auto
+# sudo netctl enable eth-auto
 
 # Base dev packages with ntfs support
 PKG="base-devel"
 # NTFS support
-PKG="ntfs-3g"
+PKG+=" ntfs-3g"
 # Xorg
-PKG+="xorg-server xorg-xinit xorg-xsetroot"
+PKG+=" xorg-server xorg-xinit xorg-xsetroot"
 if [ "$NVIDIA" = true ] ; then
-    PKG+="nvidia"
+    PKG+=" nvidia"
 fi
-
+# WM
 if [ "$DESKTOP" = "openbox" ]; then
     PKG+="openbox obconf openbox-themes"
 fi
@@ -32,29 +32,37 @@ if [ "$DESKTOP" = "i3" ]; then
     PKG+="i3"
 fi
 # Common desktop utils
-PKG+="rofi feh"
+PKG+=" rofi feh"
 # Terminal
-PKG+="rxvt-unicode git tk zsh fzf"
+PKG+=" tilix git tk zsh fzf"
 # Terminal fonts
-PKG+="powerline powerline-fonts terminus-font"
+PKG+=" powerline powerline-fonts terminus-font"
 # Editor
 # Use xclip to copy between neovim instances
-PKG+="neovim xclip python-neovim"
+PKG+=" neovim xclip python-neovim"
 # Deps for neovim plugins
-PKG+="the_silver_searcher"
+PKG+=" the_silver_searcher"
 # Web browser
-PKG+="chromium"
-# Mail client
-PKG+="thunderbird"
+PKG+=" chromium firefox"
 # Monitor
-PKG+="htop iotop nethogs"
+PKG+=" htop iotop nethogs"
 # Files
-PKG+="ranger"
+PKG+=" ranger thunar"
 # Fonts
 # Asian fonts (china, korean, japan...)
-PKG+="noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-dejavu ttf-liberation ttf-fira-code"
+PKG+=" noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-dejavu ttf-liberation ttf-fira-code"
 # For polybar (update check)
-PKG+="pacman-contrib"
+PKG+=" pacman-contrib"
+# Network manager
+PKG+=" networkmanager network-manager-applet"
+# Python development
+PKG+=" python-pipenv"
+# Go lang development
+PKG+=" go"
+# VPN
+PKG+=" openvpn networkmanager-openvpn"
+# Postgresql
+PKG+=" postgresql"
 
 sudo pacman -S $PKG
 
@@ -64,17 +72,6 @@ cat <<EOF | sudo SYSTEMD_EDITOR=tee systemctl edit getty@tty1
 ExecStart=
 ExecStart=-/usr/bin/agetty --autologin xyz --noclear %I \$TERM
 EOF
-
-# Xorg
-# sudo pacman -S xorg-server xorg-xinit xorg-xsetroot
-# # Nvidia: add this
-# sudo pacman -S nvidia
-# # Openbox
-# # sudo pacman -S openbox obconf openbox-themes
-# # i3
-# sudo pacman -S i3
-# # Common desktop utils
-# sudo pacman -S rofi feh
 
 # Fr keyboard for xorg
 sudo tee /etc/X11/xorg.conf.d/10-keyboard-layout.conf <<-EOF
@@ -88,8 +85,8 @@ EOF
 
 # Configure xinit
 head -n -5 /etc/X11/xinit/xinitrc > ~/.xinitrc # Remove last 5 lines
-echo "xset r rate 200 50" >> ~/.xinitrc # Show pointer if no window
-echo "setxkbmap -option caps:swapescape" >> ~/.xinitrc # Show pointer if no window
+echo "xset r rate 200 50" >> ~/.xinitrc
+# echo "setxkbmap -option caps:swapescape" >> ~/.xinitrc # Swap escape and caps lock keys
 echo "xsetroot -cursor_name left_ptr" >> ~/.xinitrc # Show pointer if no window
 if [ "$DESKTOP" = "openbox" ]; then
     echo "exec openbox-session" >> ~/.xinitrc # Add openbox at startup
@@ -111,34 +108,6 @@ if [[ ! \$DISPLAY && \$XDG_VTNR -eq 1 ]]; then
 fi
 EOF
 
-# Terminal
-# sudo pacman -S terminator git tk zsh fzf
-# # Terminal fonts
-# sudo pacman -S powerline powerline-fonts terminus-font
-#
-# # Editor
-# # Use xclip to copy between neovim instances
-# sudo pacman -S neovim xclip python-neovim
-# # Deps for neovim plugins
-# sudo pacman -S the_silver_searcher
-#
-# # Web browser
-# sudo pacman -S chromium
-#
-# # Mail
-# sudo pacman -S thunderbird
-#
-# # Monitor
-# sudo pacman -S htop iotop nethogs
-#
-# # Files
-# sudo pacman -S ranger
-#
-# # Fonts
-# # Asian fonts (china, korean, japan...)
-# #sudo pacman -S adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts
-# sudo pacman -S noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-dejavu ttf-liberation ttf-fira-code
-
 # Aur helper
 cd ~/ && mkdir install && cd install
 git clone https://aur.archlinux.org/yay.git
@@ -147,11 +116,11 @@ makepkg -si
 cd ~/
 
 # Polybar
-AUR_PKG="polybar siji-git"
+# AUR_PKG="polybar siji-git"
 
-yay -S $AUR_PKG
+# yay -S $AUR_PKG
 
-# Optimisation
+# Optimisation: increase file watches for IDE.
 echo fs.inotify.max_user_watches=524288 | sudo tee /etc/sysctl.d/40-max-user-watches.conf
 # source: Arch Linux - Best distro ever? | AkitaOnRails.com
 sudo tee -a /etc/sysctl.d/99-sysctl.conf <<-EOF
@@ -162,3 +131,16 @@ vm.dirty_bytes=50331648
 EOF
 
 sudo sysctl --system
+
+# Enable network manager at startup
+sudo systemctl enable NetworkManager
+
+# Init Postgresql
+sudo -u postgres initdb --locale en_US.UTF-8 -E UTF8 -D '/var/lib/postgres/data'
+sudo systemctl enable postgresql
+
+# Copy configs
+# TODO: need to cd where the script is !!!
+# mkdir -p ~/.config/
+# cp -r ./nvim ~/.config/
+# cp .gitconfig ~/

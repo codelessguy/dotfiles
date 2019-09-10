@@ -2,6 +2,9 @@
 
 set -e
 
+# LVM
+ln -s /hostlvm /run/lvm
+
 echo '** Configure Time'
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 hwclock --systohc
@@ -9,12 +12,8 @@ hwclock --systohc
 echo '** Update fatest repo' 
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 tee /etc/pacman.d/mirrorlist <<-EOF 
-Server = http://arch.yourlabs.org/\$repo/os/\$arch
-Server = http://archlinux.cu.be/\$repo/os/\$arch
-Server = http://mirror.thomaskilian.net/archlinux/\$repo/os/\$arch
-Server = http://mirror.metalgamer.eu/archlinux/\$repo/os/\$arch
-Server = http://k42.ch/mirror/archlinux/\$repo/os/\$arch
-Server = http://arch.eckner.net/archlinux/\$repo/os/\$arch
+Server = http://archlinux.de-labrusse.fr/\$repo/os/\$arch
+Server = http://archlinux.vi-di.fr/\$repo/os/\$arch
 EOF
 # sudo sh -c 'rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist'
 # curl -s "https://www.archlinux.org/mirrorlist/?country=FR&country=GB&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist

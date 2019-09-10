@@ -345,9 +345,14 @@
       <direction>down</direction>
     </action>
   </keybind>
-  <keybind key="A-Return">
+  <keybind key="W-Return">
     <action name="Execute">
       <command>terminator -u</command>
+    </action>
+  </keybind>
+  <keybind key="W-asterisk">
+    <action name="Execute">
+      <command>chromium-browser</command>
     </action>
   </keybind>
   <keybind key="A-d">
@@ -365,12 +370,12 @@
   </keybind>
   <keybind key="XF86AudioRaiseVolume">
     <action name="Execute"> 
-      <command>pactl set-sink-volume 0 +5%</command>
+      <command>amixer set Master 5%+</command>
     </action>
   </keybind>
     <keybind key="XF86AudioLowerVolume">
     <action name="Execute">
-        <command>pactl set-sink-volume 0 -5%</command>
+        <command>amixer set Master 5%-</command>
       </action>
     </keybind>
     <keybind key="XF86AudioMute">
@@ -717,7 +722,7 @@
 <applications>
     <!-- https://bbs.archlinux.org/viewtopic.php?id=124497 -->
     <!-- Match all windows and remove their decorations -->
-    <application class="*"> <decor>no</decor> </application>
+    <!-- <application class="*"> <decor>no</decor> </application> -->
 <!--
   # this is an example with comments through out. use these to make your
   # own rules, but without the comments of course.
