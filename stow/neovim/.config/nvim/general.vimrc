@@ -22,6 +22,8 @@ set modeline            " Enable modeline.
 set linespace=0         " Set line-spacing to minimum.
 set nojoinspaces        " Prevents inserting two spaces after punctuation on a join (J)
 
+set autowrite           " Auto save changes before switching buffer
+
 " More natural splits
 set splitbelow          " Horizontal split below current.
 set splitright          " Vertical split to right of current.
@@ -71,7 +73,7 @@ nmap <silent> <Leader><Right> :wincmd l<CR>
 noremap <Tab> :bnext<CR>
 noremap <S-Tab> :bprevious<CR>
 noremap <Leader>b :bdelete<CR>
-nnoremap <silent> <C-q> :CloseHiddenBuffers<CR>
+nnoremap <silent> <C-q> :Bdelete hidden<CR>
 " CLose all buffers except the current one
 " noremap <Leader>ab :%bd|e#|bd#<CR>
 " bufdo bd   " close all buffers
@@ -99,10 +101,10 @@ noremap <Right> <Nop>
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Automatically fill
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
+"inoremap " ""<left>
+"inoremap ' ''<left>
+"inoremap ( ()<left>
+"inoremap [ []<left>
+"inoremap { {}<left>
+"inoremap {<CR> {<CR>}<ESC>O
+"inoremap {;<CR> {<CR>};<ESC>O

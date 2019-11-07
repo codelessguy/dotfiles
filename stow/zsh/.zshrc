@@ -19,6 +19,7 @@ alias upt="sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo ap
 export EDITOR="nvim"
 alias vi=nvim
 alias sudovi="sudo -E nvim"
+alias zic="cd ~/data/Music && cmus"
 
 export TERM=xterm
 
