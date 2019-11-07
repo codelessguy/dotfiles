@@ -2,21 +2,24 @@
 
 set -e
 
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+cd ${SCRIPTPATH}
+
 # Config flags
 NVIDIA=true
-DESKTOP="openbox" # Others: "i3"
+DESKTOP="openbox" # Others: "openbox"
 
 # Configure network (DISABLED at startup use network manager)
-sudo tee /etc/netctl/eth-auto <<-EOF
-Interface=enp3s0
-Connection=ethernet
-IP=dhcp
-EOF
-sudo netctl start eth-auto
+#sudo tee /etc/netctl/eth-auto <<-EOF
+#Interface=enp3s0
+#Connection=ethernet
+#IP=dhcp
+#EOF
+#sudo netctl start eth-auto
 # sudo netctl enable eth-auto
 
 # Base dev packages with ntfs support
-PKG="base-devel"
+PKG="base-devel clang"
 # NTFS support
 PKG+=" ntfs-3g"
 # Xorg
@@ -26,17 +29,20 @@ if [ "$NVIDIA" = true ] ; then
 fi
 # WM
 if [ "$DESKTOP" = "openbox" ]; then
-    PKG+="openbox obconf openbox-themes"
+    PKG+=" openbox obconf"
 fi
 if [ "$DESKTOP" = "i3" ]; then
-    PKG+="i3"
+    PKG+=" i3"
 fi
 # Common desktop utils
-PKG+=" rofi feh"
+PKG+=" rofi feh stow"
 # Terminal
 PKG+=" tilix git tk zsh fzf"
 # Terminal fonts
 PKG+=" powerline powerline-fonts terminus-font"
+# Fonts
+# Asian fonts (china, korean, japan...)
+PKG+=" noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-dejavu ttf-liberation ttf-fira-code"
 # Editor
 # Use xclip to copy between neovim instances
 PKG+=" neovim xclip python-neovim"
@@ -48,9 +54,6 @@ PKG+=" chromium firefox"
 PKG+=" htop iotop nethogs"
 # Files
 PKG+=" ranger thunar"
-# Fonts
-# Asian fonts (china, korean, japan...)
-PKG+=" noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-dejavu ttf-liberation ttf-fira-code"
 # For polybar (update check)
 PKG+=" pacman-contrib"
 # Network manager
@@ -62,7 +65,7 @@ PKG+=" go"
 # VPN
 PKG+=" openvpn networkmanager-openvpn"
 # Postgresql
-PKG+=" postgresql"
+# PKG+=" postgresql"
 
 sudo pacman -S $PKG
 
@@ -109,11 +112,11 @@ fi
 EOF
 
 # Aur helper
-cd ~/ && mkdir install && cd install
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-cd ~/
+# cd ~/ && mkdir install && cd install
+# git clone https://aur.archlinux.org/yay.git
+# cd yay
+# makepkg -si
+# cd ~/
 
 # Polybar
 # AUR_PKG="polybar siji-git"
@@ -136,11 +139,15 @@ sudo sysctl --system
 sudo systemctl enable NetworkManager
 
 # Init Postgresql
-sudo -u postgres initdb --locale en_US.UTF-8 -E UTF8 -D '/var/lib/postgres/data'
-sudo systemctl enable postgresql
+# sudo -u postgres initdb --locale en_US.UTF-8 -E UTF8 -D '/var/lib/postgres/data'
+# sudo systemctl enable postgresql
 
 # Copy configs
 # TODO: need to cd where the script is !!!
 # mkdir -p ~/.config/
 # cp -r ./nvim ~/.config/
 # cp .gitconfig ~/
+
+# Install config files
+cd ${SCRIPTPATH}/stow
+stow -t ~ *

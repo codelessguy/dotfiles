@@ -1,13 +1,16 @@
-# dotfiles
-dotfiles on arch linux
+# Install
+
+use stow:
+~~~
+cd stow
+stow -t ~ *
+~~~
 
 ## Backup files
 run the following command to copy your configuration to this repo:
 ~~~
 ./backup.sh
 ~~~
-
-
 
 ## Polybar
 

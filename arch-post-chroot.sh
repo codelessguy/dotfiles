@@ -9,9 +9,9 @@ echo '** Configure Time'
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 hwclock --systohc
 
-echo '** Update fatest repo' 
+echo '** Update fatest repo'
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-tee /etc/pacman.d/mirrorlist <<-EOF 
+tee /etc/pacman.d/mirrorlist <<-EOF
 Server = http://archlinux.de-labrusse.fr/\$repo/os/\$arch
 Server = http://archlinux.vi-di.fr/\$repo/os/\$arch
 EOF

@@ -15,13 +15,13 @@ mount /dev/mapper/arch--vg-root /mnt
 
 # echo '** Update fatest repo' 
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-tee /etc/pacman.d/mirrorlist <<-EOF 
+tee /etc/pacman.d/mirrorlist <<-EOF
 Server = http://archlinux.de-labrusse.fr/\$repo/os/\$arch
 Server = http://archlinux.vi-di.fr/\$repo/os/\$arch
 EOF
 
 echo '** Install arch linux base'
-pacstrap /mnt base
+pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # LVM
@@ -30,4 +30,3 @@ mount --bind /run/lvm /mnt/hostlvm
 
 echo '** Please now copy arch-post-chroot.sh into /mnt/root/ and do:'
 echo '# arch-chroot /mnt'
-
