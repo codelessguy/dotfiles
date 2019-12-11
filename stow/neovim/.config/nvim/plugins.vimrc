@@ -19,6 +19,9 @@ Plug 'junegunn/fzf.vim'
 " Buffers
 Plug 'Asheq/close-buffers.vim'
 
+" C/C++
+Plug 'Valloric/YouCompleteMe'
+
 " Git
 "Plug 'tpope/vim-fugitive'
 

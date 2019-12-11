@@ -13,10 +13,10 @@ gaps outer 0
 # smart_gaps on
 
 ###---Starting External Scripts---###
-exec_always --no-startup-id feh --bg-tile /home/xyz/data/doc/images/wallpaper/flower_black.png
+# exec_always --no-startup-id feh --bg-tile /home/xyz/data/doc/images/wallpaper/flower_black.png
 exec --no-startup-id nm-applet
-exec --no-startup-id urxvtd -o -f -q
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# exec --no-startup-id urxvtd -o -f -q
+# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 ###---Audio and Music Definitions---###
 # Pulse Audio controls
@@ -49,7 +49,7 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvtc
+bindsym $mod+Return exec terminator
 
 # kill focused window
 bindsym $mod+Shift+Q kill

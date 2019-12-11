@@ -1,6 +1,11 @@
 #!/bin/sh
-
 set -e
+
+# DRIVE=/dev/sdb
+# LVM=true
+
+DRIVE=/dev/sda
+LVM=false
 
 # LVM
 ln -s /hostlvm /run/lvm
@@ -12,8 +17,8 @@ hwclock --systohc
 echo '** Update fatest repo'
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 tee /etc/pacman.d/mirrorlist <<-EOF
-Server = http://archlinux.de-labrusse.fr/\$repo/os/\$arch
-Server = http://archlinux.vi-di.fr/\$repo/os/\$arch
+Server = https://mirror.cyberbits.eu/archlinux/\$repo/os/\$arch
+Server = http://archlinux.mirrors.ovh.net/archlinux/\$repo/os/\$arch
 EOF
 # sudo sh -c 'rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist'
 # curl -s "https://www.archlinux.org/mirrorlist/?country=FR&country=GB&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
@@ -32,29 +37,25 @@ tee -a /etc/hosts <<-EOF
 EOF
 
 echo '** Configure lvm at boot'
-sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base udev autodetect modconf block lvm2 filesystems keyboard fsck)/g' /etc/mkinitcpio.conf
+if [ "$LVM" = true ]; then
+    sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base udev autodetect modconf block lvm2 filesystems keyboard fsck)/g' /etc/mkinitcpio.conf
+fi
 mkinitcpio -p linux
 
-echo '** Change root password'
+echo '** Change ROOT password'
 passwd
 
-echo '** Add user'
+echo '** Add user: XYZ'
 useradd -m -G wheel -s /bin/bash xyz
 passwd xyz
-pacman -S sudo
+pacman -S --noconfirm sudo nano
 EDITOR=nano visudo
 
 echo '** Install grub'
-pacman -S grub
-grub-install --target=i386-pc /dev/sdb
+pacman -S --noconfirm grub
+grub-install --target=i386-pc ${DRIVE}
 # UEFI
 # pacman -S grub efibootmgr
 # grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
 
 grub-mkconfig -o /boot/grub/grub.cfg
-
-echo '** Please now do:'
-echo 'exit'
-echo 'sync'
-echo 'umount -R /mnt'
-echo 'reboot'

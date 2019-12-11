@@ -16,6 +16,6 @@
 #
 #xfce-mcs-manager &
 
-feh --bg-tile /home/xyz/data/doc/images/wallpaper/flower_black.png &
-nm-applet &
-tint2 &
+# feh --bg-tile /home/xyz/data/doc/images/wallpaper/flower_black.png &
+# nm-applet &
+# tint2 &
