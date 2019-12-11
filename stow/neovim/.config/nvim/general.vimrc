@@ -83,7 +83,6 @@ nnoremap <silent> <C-q> :Bdelete hidden<CR>
 set relativenumber
 set rnu
 
-
 " Avoid copy when delete
 " source: https://stackoverflow.com/questions/11993851/how-to-delete-not-cut-in-vim
 nnoremap <leader>d "_d
