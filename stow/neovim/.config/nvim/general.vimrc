@@ -1,6 +1,3 @@
-" RELOAD VIM !!!
-" :so $MYVIMRC
-
 " BASE CONFIG: http://nerditya.com/code/guide-to-neovim/
 let mapleader = ','
 
@@ -11,9 +8,10 @@ set ruler               " Show the line and column numbers of the cursor.
 set number              " Show the line numbers on the left side.
 set formatoptions+=o    " Continue comment marker in new lines.
 set textwidth=0         " Hard-wrap long lines as you type them.
-" set expandtab           " Insert spaces when TAB is pressed.
+set expandtab           " Insert spaces when TAB is pressed.
 set tabstop=4           " Render TABs using this many spaces.
 set shiftwidth=4        " Indentation amount for < and > commands.
+set softtabstop=4
 set autoindent
 set noexpandtab
 
@@ -31,8 +29,11 @@ set splitright          " Vertical split to right of current.
 " Search
 set ignorecase          " Make searching case insensitive
 set smartcase           " ... unless the query has capital letters.
-set gdefault            " Use 'g' flag by default with :s/foo/bar/.
+" set gdefault            " Use 'g' flag by default with :s/foo/bar/.
+set nogdefault
 set magic               " Use 'magic' patterns (extended regular expressions).
+
+set colorcolumn=80      " Line showing limit of 80 characters per line
 
 " Use <C-L> to clear the highlighting of :set hlsearch.
 if maparg('<C-L>', 'n') ==# ''
@@ -95,6 +96,12 @@ noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
+
+" Disable Arrow keys in Insert mode
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
 
 " Disable auto comment insertion
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o

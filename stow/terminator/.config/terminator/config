@@ -21,7 +21,7 @@
   [[default]]
     background_color = "#eeeeee"
     cursor_color = "#4D4D4C"
-    font = Source Code Pro Medium 10
+    font = Source Code Pro 10
     foreground_color = "#4d4d4c"
     palette = "#ededed:#d7005f:#718c00:#d75f00:#4271ae:#8959a8:#3e999f:#4d4d4c:#969694:#d7005f:#718c00:#d75f00:#4271ae:#8959a8:#3e999f:#f5f5f5"
     scrollback_lines = 9000

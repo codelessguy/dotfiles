@@ -1,6 +1,11 @@
 ##############
 # Zsh config #
 ##############
+
+if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+    exec startx
+fi
+
 # History
 HISTFILE=~/.zhistory
 HISTSIZE=10000
@@ -30,6 +35,17 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
+# Make ^Z toggle between ^Z and fg
+function ctrlz() {
+if [[ $#BUFFER == 0 ]]; then
+    fg >/dev/null 2>&1 && zle redisplay
+else
+    zle push-input
+fi
+}
+zle -N ctrlz
+bindkey '^Z' ctrlz
+
 # Change cursor shape for different vi modes.
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
@@ -55,7 +71,7 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 # Other configs #
 #################
 # alias upt="sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo apt clean"
-alias upt="sudo dnf update && sudo dnf autoremove"
+# alias upt="sudo dnf update && sudo dnf autoremove"
 
 export EDITOR="nvim"
 alias vi=nvim
@@ -72,12 +88,17 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # FZF
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# source /usr/share/doc/fzf/examples/key-bindings.zsh
-# source /usr/share/fzf/key-bindings.zsh
-# source /usr/share/fzf/completion.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 # make history search unique
 # see this patch: https://github.com/junegunn/fzf/pull/1363/commits/6d31209fc9bc8b3dba4589f9ac3ed7b9c8821f05
+# change line to (in key-bindings.zsh):
+# selected=( $(fc -rl 1 | perl -ne 'print if !$seen{($_ =~ s/^[0-9\s]*//r)}++' |
+
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Go
 # export GOROOT=/usr/local/go
@@ -92,5 +113,13 @@ export PATH="$NODEROOT/bin:$PATH"
 
 #export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
 
+alias ls='ls --color=auto'
+
+alias yt-upt="pip3 install --upgrade youtube_dl"
+alias yt-mp3="youtube-dl --extract-audio --audio-format mp3 --audio-quality 0"
+
 # Load zsh-syntax-highlighting; should be last.
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+# source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+#source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+

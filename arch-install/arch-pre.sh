@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e
 
-LVM=false
-
 formatsdd(){
     # mkfs.fat -F32 /dev/sdb1  (boot partition if EFI)
     mkfs.ext4 /dev/mapper/arch--vg-root
@@ -23,14 +21,15 @@ formatvm(){
 loadkeys fr
 timedatectl set-ntp true
 
-# formatsdd
-formatvm
+LVM=true
+formatsdd
 
-# echo '** Update fatest repo' 
+# echo '** Update fatest repo'
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 tee /etc/pacman.d/mirrorlist <<-EOF
 Server = https://mirror.cyberbits.eu/archlinux/\$repo/os/\$arch
-Server = http://archlinux.mirrors.ovh.net/archlinux/\$repo/os/\$arch
+Server = https://mirror.netcologne.de/archlinux/\$repo/os/\$arch
+Server = https://mirror.oldsql.cc/archlinux/\$repo/os/\$arch
 EOF
 
 echo '** Install arch linux base'

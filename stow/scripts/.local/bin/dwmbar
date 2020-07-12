@@ -1,0 +1,16 @@
+#!/bin/sh
+
+delim="|"
+
+status() {
+	amixer get Master |grep -o "[0-9]*%\|\[on\]\|\[off\]"
+
+	echo "$delim"
+
+	date '+%Y %b %d (%a) %I:%M%p'
+}
+
+while :; do
+	xsetroot -name "$(status |tr '\n' ' ')"
+	sleep 1m
+done
